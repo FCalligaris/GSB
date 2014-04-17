@@ -1,0 +1,51 @@
+{% extends "PgGsbFraisBundle::accueilCompta.html.twig" %}
+{%block section %}
+<h1>Suivi des frais des utilisateurs </h1>
+
+<div id="contenu">
+    <h2> Mes fiches à traiter </h2>
+    <h3> Mois à sélectionner : </h3>
+    <form method ="POST">
+        <div class="corpsForm">
+            <p>
+                <label for="lstUtilisateur" accesskey="n"> Utilisateur : </label>
+                <select id="lstUtilisateur" name ="lstUtilisateur" onChange="javascript:submit();">
+                {% for unVisiteur in lesVisiteurs  %}
+                        <option value ={{unVisiteur.id}}>{{unVisiteur.nom}} {{unVisiteur.prenom}}</option>
+                {% endfor %}
+                    </select>
+            </p>
+
+            <p>
+            {%if lesFichesFrais not null%} 
+                <table class="listeLegere">
+                    <caption>Eléments forfaitisés</caption>
+                    <tr>
+                        {% for unfrais in lesfraisforfait %}
+                        {% set libelle = unfrais.libelle%}
+                        <th>{{libelle}} </th>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        {% for unfrais in lesfraisforfait %}
+                        {% set quantite = unfrais.quantite%}
+                        <td class = qteForfait >{{quantite}} </td>
+                        {% endfor %}
+                    </tr>	
+                </table>
+            {%else%}
+                Il n'y a pas de fiches de frais enregistrées pour ce mois-ci.
+            {%endif%}
+            </p>
+
+        </div>
+
+        <div class="piedForm">
+            </p>
+            <input id = "ok" class="btn btn-success btn-large" type="submit" value="Valider" name="valider" size = "20">
+            <input id = "annuler" class="btn btn-danger btn-large" type="reset" value="Annuler" name="annuler" size = "20"> 
+            </p>
+        </div>  
+    </form> 
+
+{%endblock%}
